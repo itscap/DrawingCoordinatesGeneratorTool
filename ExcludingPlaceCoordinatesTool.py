@@ -1,5 +1,7 @@
 
+
 import rlcompleter 
+    
 
 def deleteContent(file):
     file.seek(0)
@@ -26,6 +28,18 @@ def columnToExclude(coord):
     for y in range(coord[1],coord[2],1):
         textFile.write("("+ str(coord[0]) + "," +  str(y) + "),")
 
+def excludeNewColumn():
+    coordToExclude = getUsrInput()
+    columnToExclude(coordToExclude)
+    textFile.write("("+ str(coordToExclude[0]) + "," +  str(coordToExclude[2]) + ")")
+    print("Do you want to exclude a new column? Y/N")
+    usrChoice=input()
+    if usrChoice.lower()=="y":
+        textFile.write(",")
+        excludeNewColumn()
+    else:
+        textFile.write("]")
+    
 
         
 #EX--> drawingName = [(colX,fromY),(133,481),(133,482),...(133,509),(colX,toY)]
@@ -43,10 +57,7 @@ print ("Deleting previous file content...")
 deleteContent(textFile)
 
 textFile.write(drawingToExcludeName + " = [")
-
-coordToExclude = getUsrInput()
-columnToExclude(coordToExclude)
-textFile.write("("+ str(coordToExclude[0]) + "," +  str(coordToExclude[2]) + ")]")
+excludeNewColumn()
 textFile.close()
 
 
